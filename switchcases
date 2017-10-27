@@ -1,0 +1,125 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Switch_Cases
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Phonetic Alphabet Program
+            // Created by Jack Kent
+            // Tutorial can be found at http://jackcompsci.duckdns.org/index.php/2017/switch-cases/
+            // Use and modify as you please
+            
+
+            string letter;  // Declares the variable "letter"
+            Console.ForegroundColor = ConsoleColor.White;  // Sets the text colour to white
+
+            Input:  // This is the label "Input"
+            Console.Clear();  // Clears any text from the screen.
+            Console.WriteLine("Please enter a letter:");  // Asks the user to enter a letter
+
+            letter = Console.ReadLine();  // Assigns the user input to the variable "letter"
+            Console.WriteLine("");  // Creates a blank line gap
+
+            switch (letter)  // Creates a switch case, and tells it what variable to check
+            {  // Start of the switch case
+                case "a":  // If the variable "letter" (user input) equals "a"
+                    Console.WriteLine("A is for Alpha");  // It will run this code
+                    break;  // Tells the switch case where the case ends
+                case "b":
+                    Console.WriteLine("B is for Bravo");
+                    break;
+                case "c":
+                    Console.WriteLine("C is for Charlie");
+                    break;
+                case "d":
+                    Console.WriteLine("D is for Delta");
+                    break;
+                case "e":
+                    Console.WriteLine("E is for Echo");
+                    break;
+                case "f":
+                    Console.WriteLine("F is for Foxtrot");
+                    break;
+                case "g":
+                    Console.WriteLine("G is for Golf");
+                    break;
+                case "h":
+                    Console.WriteLine("H is for Hotel");
+                    break;
+                case "i":
+                    Console.WriteLine("I is for India");
+                    break;
+                case "j":
+                    Console.WriteLine("J is for Juliet");
+                    break;
+                case "k":
+                    Console.WriteLine("K is for Kilo");
+                    break;
+                case "l":
+                    Console.WriteLine("L is for Lima");
+                    break;
+                case "m":
+                    Console.WriteLine("M is for Mike");
+                    break;
+                case "n":
+                    Console.WriteLine("N is for November");
+                    break;
+                case "o":
+                    Console.WriteLine("O is for Oscar");
+                    break;
+                case "p":
+                    Console.WriteLine("P is for Papa");
+                    break;
+                case "q":
+                    Console.WriteLine("Q is for Quebec");
+                    break;
+                case "r":
+                    Console.WriteLine("R is for Romeo");
+                    break;
+                case "s":
+                    Console.WriteLine("S is for Sierra");
+                    break;
+                case "t":
+                    Console.WriteLine("T is for Tango");
+                    break;
+                case "u":
+                    Console.WriteLine("U is for Uniform");
+                    break;
+                case "v":
+                    Console.WriteLine("V is for Victor");
+                    break;
+                case "w":
+                    Console.WriteLine("W is for Whiskey");
+                    break;
+                case "x":
+                    Console.WriteLine("X is for Xray");
+                    break;
+                case "y":
+                    Console.WriteLine("Y is for Yankee");
+                    break;
+                case "z":
+                    Console.WriteLine("Z is for Zulu");
+                    break;
+                default:  // This case will run if the input is not one of the letters above
+                    Console.WriteLine("Sorry, that input is incorrect.");
+                    break;
+                case "Finish": // This case will run if the input is "Finish"
+                    goto Finish;  // Goes to the label "Finish"
+                    break;
+            }  // End of the switch case
+
+            Console.ReadLine();  // Waits for the enter key to be pressed, allowing the user to read what we printed in the switch case
+            goto Input;  // Goes to the label "Input" which allows for another letter to be given as input
+
+            Finish:  // This is the label "Finish"
+            Console.WriteLine("See you next time!");  // Prints a friendly message to the user
+            Console.Read();  // Waits for the enter key to be presses before closing the program
+        }
+    }
+}
