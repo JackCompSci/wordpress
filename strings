@@ -1,0 +1,111 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace String_Maniupulation
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            /*
+            string firstname;
+            string lastname;
+            string firstname2;
+            string lastname2;
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("What is your first name?");
+            firstname = Console.ReadLine();
+            Console.WriteLine("What is your last name?");
+            lastname = Console.ReadLine();
+
+            firstname2 = firstname.ToUpper();
+            lastname2 = lastname.ToLower();
+
+            Console.WriteLine("\n\nOutput: " + firstname2.Substring(1,2) + lastname2.Substring(1,2));
+            Console.ReadLine();
+            */
+
+            /*
+            string bits;
+            string parity;
+            int pos = 0;
+            int count1 = 0;
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Please enter the 7 bits:");
+            bits = Console.ReadLine();
+            parity = "";
+
+            for (int i = 0; i <= 6; i++)
+            {
+                if (bits.Substring(pos,1) == "1")
+                {
+                    count1++;
+                }
+                pos++;
+            }
+
+            if (count1 % 2 == 0)
+            {
+                parity = bits + "1";
+            }
+            else
+            {
+                if (count1 % 2 != 0)
+                {
+                    parity = bits + "0";
+                }
+                else
+                {
+                    Console.WriteLine("An error occured.");
+                }
+            }
+            Console.WriteLine("Your 8 bits including an even parity bit is: " + parity);
+            Console.ReadLine();
+            */
+
+            /*
+            string sentence = "";
+            string output = "";
+            string outputhold = "";
+            int pos = 0;
+            int form = 0;
+
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Please enter a sentence:");
+            sentence = Console.ReadLine();
+            pos = sentence.Length;
+
+            for (int i = 0; i < sentence.Length; i++)
+            {
+                outputhold = sentence.Substring(pos - 1, 1);
+                if (outputhold != " ")
+                {
+                    if (form == 0)
+                    {
+                        output += outputhold.ToLower();
+                        form = 1;
+                    }
+                    else
+                    {
+                        if (form == 1)
+                        {
+                            output += outputhold.ToUpper();
+                            form = 0;
+                        }
+                    }
+                }
+                pos--;
+            }
+
+            Console.WriteLine(output);
+            Console.ReadLine();
+            */
+        }
+    }
+}
