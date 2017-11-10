@@ -1,0 +1,72 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace For_Loops
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // https://github.com/JackCompSci/wordpress/pyramid
+            // Custom Pyramid Printer by Jack Kent
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("What colour would you like the pyramid to be?");
+            string colour = Console.ReadLine();
+
+            Console.WriteLine("How high would you like the pyramid?");
+            int height = Convert.ToInt16(Console.ReadLine());
+
+            switch (colour)
+            {
+                case "white":
+                    Console.ForegroundColor = ConsoleColor.White;
+                    break;
+                case "green":
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    break;
+                case "yellow":
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    break;
+                case "blue":
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    break;
+                case "magenta":
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    break;
+                case "cyan":
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    break;
+                default:
+                    Console.ForegroundColor = ConsoleColor.White;
+                    break;
+            }
+
+            string star = "*";
+            string space = " ";
+            int starq;
+            int spaceq = height - 1;
+            
+            for (int i = 0; i < height; i++)
+            {
+                starq = (2 * i) + 1;
+                
+                for (int p = 0; p < spaceq; p++)
+                {
+                    Console.Write(space);
+                }
+                
+                for (int t = 0; t < starq + 1; t++)
+                {
+                    Console.Write(star);
+                }
+                Console.WriteLine("");
+                spaceq -= 1;
+                
+            }
+            Console.ReadLine();
+        }
+    }
+}
