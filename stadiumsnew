@@ -1,0 +1,218 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace Arrays
+{
+    class Program
+    {
+        static StadiumStruct[] Premiership = new StadiumStruct[5];
+
+        static void Main(string[] args)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            loadData();
+            saveData();
+            string select1L = "", select1R = "", select2L = "", select2R = "", select3L = "", select3R = "";
+            bool exit = false;
+
+            Console.WriteLine("Welcome to the Stadium Quiz!");
+            Console.WriteLine("Press enter to begin...");
+            
+            do
+            {
+            Console.Clear();
+            Console.WriteLine("Please select an option:\n");
+            Console.WriteLine(select1L + "Start Quiz" + select1R);
+            Console.WriteLine(select2L + "New Stadium" + select2R);
+            Console.WriteLine(select3L + "Load Data" + select3R);
+            string mainMenuInput = Console.ReadLine();
+
+            switch (mainMenuInput)
+            {
+                case "1":
+                    select1L = "[";
+                    select1R = "]";
+                    select2L = "";
+                    select2R = "";
+                    select3L = "";
+                    select3R = "";
+                    goto mainMenu;
+                    break;
+                case "2":
+                    select1L = "";
+                    select1R = "";
+                    select2L = "[";
+                    select2R = "]";
+                    select3L = "";
+                    select3R = "";
+                    break;
+                case "3":
+                    select1L = "";
+                    select1R = "";
+                    select2L = "";
+                    select2R = "";
+                    select3L = "[";
+                    select3R = "]";
+                    break;
+                case "q":
+                    if (select1R == "]")
+                    {
+                        Quiz();
+                    }
+                    else
+                    {
+                        if (select2R == "]")
+                        {
+                            createStadium();
+                        }
+                        else
+                        {
+                            if (select3R == "]")
+                            {
+                                loadData();
+                            }
+                        }
+                    }
+                    break;
+                case "e":
+                    exit = true;
+            }
+            }
+            while (exit = false);
+            Console.ReadLine();
+            Console.Clear();
+        }
+
+        static void createStadium()
+        {
+            Console.WriteLine("Coming soon...");
+            Console.ReadLine();
+        }
+        static void Quiz()
+        {
+            int stadiumNumber = 0;
+            for (int i = 0; i <= 4; i++)
+            {
+                Question(stadiumNumber);
+                stadiumNumber++;
+            }
+            Console.ReadLine();
+        }
+        static void saveData()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                BinaryWriter bw = new BinaryWriter(new FileStream("stadiumData"+i, FileMode.Create));
+                bw.Write(Premiership[i].Name);
+                bw.Write(Premiership[i].City);
+                bw.Write(Premiership[i].Team);
+                bw.Write(Premiership[i].Capacity);
+                bw.Write(Premiership[i].YearBuilt);
+                bw.Write(Premiership[i].Cost);
+                bw.Close();
+            }
+        }
+        static void loadData()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                BinaryReader br = new BinaryReader(new FileStream("stadiumData" + i, FileMode.Open));
+                Premiership[i].Name = br.ReadString();
+                Premiership[i].City = br.ReadString();
+                Premiership[i].Team = br.ReadString();
+                Premiership[i].Capacity = br.ReadInt32();
+                Premiership[i].YearBuilt = br.ReadInt32();
+                Premiership[i].Cost = br.ReadInt32();
+                br.Close();
+            }
+        }
+
+        static void Question(int stadiumNumber)
+        {
+            string cityCheck = "";
+            string teamCheck = "";
+            string capacityCheck = "";
+            string yearBuiltCheck = "";
+            string costCheck = "";
+
+            Console.WriteLine("====================");
+            Console.WriteLine("Stadium #" + (stadiumNumber + 1) + " - " + Premiership[stadiumNumber].Name);
+            Console.WriteLine("====================");
+            Console.WriteLine("\nQ1) In which city is " + Premiership[stadiumNumber].Name + " located?");
+            string inputCity = Console.ReadLine();
+            Console.WriteLine("\nQ2) What team occupies " + Premiership[stadiumNumber].Name + "?");
+            string inputTeam = Console.ReadLine();
+            Console.WriteLine("\nQ3) What is the capacity of " + Premiership[stadiumNumber].Name + "?");
+            int inputCapacity = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("\nQ4) In what year was " + Premiership[stadiumNumber].Name + " construction completed?");
+            int inputYearBuilt = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("\nQ5) How much did " + Premiership[stadiumNumber].Name + " cost to build?");
+            int inputCost = Convert.ToInt32(Console.ReadLine());
+            Console.Clear();
+            if (inputCity == Premiership[stadiumNumber].City)
+            {
+                cityCheck = "\u221A";
+            }
+            else
+            {
+                cityCheck = "X  You put " + inputCity;
+            }
+            if (inputTeam == Premiership[stadiumNumber].Team)
+            {
+                teamCheck = "\u221A";
+            }
+            else
+            {
+                teamCheck = "X  You put " + inputTeam;
+            }
+            if (inputCapacity == Premiership[stadiumNumber].Capacity)
+            {
+                capacityCheck = "\u221A";
+            }
+            else
+            {
+                capacityCheck = "X  You put " + inputCapacity;
+            }
+            if (inputYearBuilt == Premiership[stadiumNumber].YearBuilt)
+            {
+                yearBuiltCheck = "\u221A";
+            }
+            else
+            {
+                yearBuiltCheck = "X  You put " + inputYearBuilt;
+            }
+            if (inputCost == Premiership[stadiumNumber].Cost)
+            {
+                costCheck = "\u221A";
+            }
+            else
+            {
+                costCheck = "X  You put " + inputCost;
+            }
+            Console.WriteLine("====================");
+            Console.WriteLine("Stadium #" + (stadiumNumber + 1) + " - " + Premiership[stadiumNumber].Name);
+            Console.WriteLine("====================");
+            Console.WriteLine("\nQ1) City\nAnswer: " + Premiership[stadiumNumber].City + "  " + cityCheck);
+            Console.WriteLine("\nQ2) Team\nAnswer: " + Premiership[stadiumNumber].Team + "  " + teamCheck);
+            Console.WriteLine("\nQ3) Capacity\nAnswer: " + Premiership[stadiumNumber].Capacity + "  " + capacityCheck);
+            Console.WriteLine("\nQ4) Year Built\nAnswer: " + Premiership[stadiumNumber].YearBuilt + "  " + yearBuiltCheck);
+            Console.WriteLine("\nQ5) Cost\nAnswer: " + Premiership[stadiumNumber].Cost + "  " + costCheck);
+            Console.ReadLine();
+            Console.Clear();
+
+        }
+        struct StadiumStruct
+        {
+            public string Name;
+            public string City;
+            public string Team;
+            public int Capacity;
+            public int YearBuilt;
+            public decimal Cost;
+        }
+    }
+}
