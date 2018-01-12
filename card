@@ -1,0 +1,223 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Card_Game
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Clear();
+            int Number = GetCard();
+            string Suit = GetSuit(Number);
+            int Rank = GetRank(Number);
+            string Value = GetCardValue(Rank);
+
+            Console.WriteLine("-*-*-*-*-*-*-\n\nGuess a Card\n\n-*-*-*-*-*-*-");
+            Console.Write("\n\nFirst, guess the ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("Suit");
+            Console.Write("\n\n[1]");
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write(" Hearts");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("    [2]");
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write(" Diamonds");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("    [3]");
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write(" Spades");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("    [4]");
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write(" Clubs\n\n");
+            int guessSuit = Convert.ToInt16(Console.ReadLine());
+            Console.Clear();
+
+            Console.WriteLine("-*-*-*-*-*-*-\n\nGuess a Card\n\n-*-*-*-*-*-*-");
+            Console.Write("\n\nNow guess the ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("Value");
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write("    (Enter Number OR Choose Option Below)");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("\n\n[10]");
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write(" Jack");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("    [11]");
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write(" Queen");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("    [12]");
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write(" King\n\n");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.ForegroundColor = ConsoleColor.Black;
+            int guessValue = Convert.ToInt16(Console.ReadLine());
+            Console.Clear();
+
+            string guessSuitStr;
+            switch (guessSuit)
+            {
+                case 1:
+                    guessSuitStr = "Hearts";
+                    break;
+                case 2:
+                    guessSuitStr = "Diamonds";
+                    break;
+                case 3:
+                    guessSuitStr = "Spades";
+                    break;
+                case 4:
+                    guessSuitStr = "Clubs";
+                    break;
+                default:
+                    guessSuitStr = "null";
+                    break;
+            }
+
+            string guessValueStr;
+            /* switch (guessValue)
+            {
+                case 0:
+                    return "Ace";
+                    break;
+                case 1:
+                    return "Two";
+                    break;
+                case 2:
+                    return "Three";
+                    break;
+                case 3:
+                    return "Four";
+                    break;
+                case 4:
+                    return "Five";
+                    break;
+                case 5:
+                    return "Six";
+                    break;
+                case 6:
+                    return "Seven";
+                    break;
+                case 7:
+                    return "Eight";
+                    break;
+                case 8:
+                    return "Nine";
+                    break;
+                case 9:
+                    return "Ten";
+                    break;
+                case 10:
+                    return "Jack";
+                    break;
+                case 11:
+                    return "Queen";
+                    break;
+                case 12:
+                    return "King";
+                    break;
+                default:
+                    return "null";
+                    break;
+            }
+*/
+            Console.WriteLine("-*-*-*-*-*-*-\n\nGuess a Card\n\n-*-*-*-*-*-*-");
+            Console.WriteLine("\n\nYour guess is:");
+        }
+
+        static int GetCard()
+        {
+            Random rndNum = new Random();
+            int randomNumber = rndNum.Next(0,52);
+            return randomNumber;
+        }
+
+        static string GetSuit(int Card)
+        {
+            decimal d = Card / 13;
+            int SuitValue = Convert.ToInt16(Math.Round(d));
+            switch (SuitValue)
+            {
+                case 0:
+                    return "Hearts";
+                    break;
+                case 1:
+                    return "Diamonds";
+                    break;
+                case 2:
+                    return "Spades";
+                    break;
+                case 3:
+                    return "Clubs";
+                    break;
+                default:
+                    return "null";
+                    break;
+            }
+        }
+
+        static int GetRank(int Card)
+        {
+            int Rank = Card % 13;
+            return Rank;
+        }
+
+        static string GetCardValue(int Rank)
+        {
+            switch (Rank)
+            {
+                case 0:
+                    return "Ace";
+                    break;
+                case 1:
+                    return "Two";
+                    break;
+                case 2:
+                    return "Three";
+                    break;
+                case 3:
+                    return "Four";
+                    break;
+                case 4:
+                    return "Five";
+                    break;
+                case 5:
+                    return "Six";
+                    break;
+                case 6:
+                    return "Seven";
+                    break;
+                case 7:
+                    return "Eight";
+                    break;
+                case 8:
+                    return "Nine";
+                    break;
+                case 9:
+                    return "Ten";
+                    break;
+                case 10:
+                    return "Jack";
+                    break;
+                case 11:
+                    return "Queen";
+                    break;
+                case 12:
+                    return "King";
+                    break;
+                default:
+                    return "null";
+                    break;
+            }
+        }
+    }
+}
