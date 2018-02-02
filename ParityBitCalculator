@@ -1,0 +1,51 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace String_Maniupulation
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string bits;
+            string parity;
+            int pos = 0;
+            int count1 = 0;
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Please enter the 7 bits:");
+            bits = Console.ReadLine();
+            parity = "";
+
+            for (int i = 0; i <= 6; i++)
+            {
+                if (bits.Substring(pos,1) == "1")
+                {
+                    count1++;
+                }
+                pos++;
+            }
+
+            if (count1 % 2 == 0)
+            {
+                parity = bits + "1";
+            }
+            else
+            {
+                if (count1 % 2 != 0)
+                {
+                    parity = bits + "0";
+                }
+                else
+                {
+                    Console.WriteLine("An error occured.");
+                }
+            }
+            Console.WriteLine("Your 8 bits including an even parity bit is: " + parity);
+            Console.ReadLine();
+        }
+    }
+}
