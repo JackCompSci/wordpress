@@ -1,0 +1,113 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BinarySearchProgram
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Title = ("Binary Search Algorithm");
+            const int MaxListSize = 1000;
+            string MenuItem;
+            int[] NumList = new int[MaxListSize];
+            do
+            {
+                MenuItem = GetMenuChoice();
+                switch (MenuItem)
+                {
+                    case "1":
+                        Array.Clear(NumList,0,0);
+                        Random RanNum = new Random();
+                        for (int i = 0; i < MaxListSize; i++)
+                        {
+                            NumList[i] = RanNum.Next(1,10000);
+                        }
+                        break;
+                    case "2":
+                        for (int i = 0; i < MaxListSize; i++)
+                        {
+                            Console.WriteLine(NumList[i]);
+                        }
+                        Console.ReadLine();
+                        break;
+                    case "3":
+                        Array.Sort(NumList);
+                        break;
+                    case "4":
+                        BinarySearch(ref NumList);
+                        break;
+                    case "5":
+                        break;
+                    default:
+                        Console.WriteLine("invalid selection");
+                        break;
+                }
+            }
+            while (MenuItem != "5");
+            Console.Clear();
+            Console.WriteLine("Goodbye!");
+            Console.ReadLine();
+        }
+
+        public static void BinarySearch(ref int[] TheList)
+        {
+            int min = 0, max = TheList.Length, mid = 0, guess = 0, counter = 0;
+            bool found = false;
+            Console.Clear();
+            Console.WriteLine("What number would you like to search for?");
+            int toFind = Convert.ToInt16(Console.ReadLine());
+
+            do
+            {
+                counter++;
+                mid = ((max + min)/2);
+                guess = TheList[mid];
+                if (guess == toFind)
+                {
+                    found = true;
+                }
+                else
+                {
+                    if (guess > toFind)
+                    {
+                        max = mid--;
+                    }
+                    else
+                    {
+                        min = mid++;
+                    }
+                }
+            }
+            while (found == false && counter <= 10);
+            if (found == true)
+            {
+                Console.WriteLine("\n\nFound the number " + toFind + " in position " + mid);
+                Console.WriteLine("\n\n\nMin: " + min + "   Max: " + max + "   Mid: " + mid + "   Guess: " + guess);
+            }
+            else
+            {
+                Console.WriteLine("\n\nThe number wasn't found...");
+                Console.WriteLine("\n\n\nMin: " + min + "   Max: " + max + "   Mid: " + mid + "   Guess: " + guess);
+            }
+            Console.ReadLine();
+        }
+        
+        public static string GetMenuChoice()
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine("1) Generate List");
+            Console.WriteLine("2) Display List");
+            Console.WriteLine("3) Sort List");
+            Console.WriteLine("4) Binary Search List");
+            Console.WriteLine("5) Exit program");
+            Console.WriteLine();
+            Console.WriteLine("Enter your menu choice number");
+            return Console.ReadLine();
+        }
+    }
+}
