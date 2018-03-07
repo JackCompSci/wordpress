@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Card_Game
 {
@@ -47,20 +48,21 @@ namespace Card_Game
             Console.ForegroundColor = ConsoleColor.Black;
             Console.Write("    (Enter Number OR Choose Option Below)");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("\n\n[10]");
+            Console.Write("\n\n[11]");
             Console.ForegroundColor = ConsoleColor.Black;
             Console.Write(" Jack");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("    [11]");
+            Console.Write("    [12]");
             Console.ForegroundColor = ConsoleColor.Black;
             Console.Write(" Queen");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("    [12]");
+            Console.Write("    [13]");
             Console.ForegroundColor = ConsoleColor.Black;
             Console.Write(" King\n\n");
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.ForegroundColor = ConsoleColor.Black;
             int guessValue = Convert.ToInt16(Console.ReadLine());
+            guessValue--;
             Console.Clear();
 
             string guessSuitStr;
@@ -84,54 +86,99 @@ namespace Card_Game
             }
 
             string guessValueStr;
-            /* switch (guessValue)
+            switch (guessValue)
             {
                 case 0:
-                    return "Ace";
+                    guessValueStr = "Ace";
                     break;
                 case 1:
-                    return "Two";
+                    guessValueStr = "Two";
                     break;
                 case 2:
-                    return "Three";
+                    guessValueStr = "Three";
                     break;
                 case 3:
-                    return "Four";
+                    guessValueStr = "Four";
                     break;
                 case 4:
-                    return "Five";
+                    guessValueStr = "Five";
                     break;
                 case 5:
-                    return "Six";
+                    guessValueStr = "Six";
                     break;
                 case 6:
-                    return "Seven";
+                    guessValueStr = "Seven";
                     break;
                 case 7:
-                    return "Eight";
+                    guessValueStr = "Eight";
                     break;
                 case 8:
-                    return "Nine";
+                    guessValueStr = "Nine";
                     break;
                 case 9:
-                    return "Ten";
+                    guessValueStr = "Ten";
                     break;
                 case 10:
-                    return "Jack";
+                    guessValueStr = "Jack";
                     break;
                 case 11:
-                    return "Queen";
+                    guessValueStr = "Queen";
                     break;
                 case 12:
-                    return "King";
+                    guessValueStr = "King";
                     break;
                 default:
-                    return "null";
+                    guessValueStr = "null";
                     break;
             }
-*/
+            int balance = loadPoints();
+            Console.WriteLine("-*-*-*-*-*-*-\t\t\t\t\t\tPoint Balance: " + balance + "\n\nGuess a Card\n\n-*-*-*-*-*-*-");
+            Console.WriteLine("\n\nYour guess is: " + guessValueStr + " of " + guessSuitStr);
+            Console.WriteLine("\nPress Enter to Continue...");
+            Console.ReadLine();
+            Console.WriteLine("The correct card was: " + Value + " of " + Suit);
+            int addPoint = 0;
+            Console.Clear();
             Console.WriteLine("-*-*-*-*-*-*-\n\nGuess a Card\n\n-*-*-*-*-*-*-");
-            Console.WriteLine("\n\nYour guess is:");
+            Console.WriteLine("\n\nYour guess is: " + guessValueStr + " of " + guessSuitStr);
+            Console.WriteLine("The correct card was: " + Value + " of " + Suit);
+            if (guessValueStr == Value && guessSuitStr == Suit)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("\n\nYour guess was correct! You earned 10 points!");
+                addPoint = 10;
+            }
+            else
+            {
+                if (guessValueStr == Value)
+                {
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.WriteLine("\n\nYou guessed the value correctly, but not the suit. You earned 5 points!");
+                    addPoint = 5;
+                }
+                else
+                {
+                    if (guessSuitStr == Suit)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.WriteLine("\n\nYou guessed the suit correctly, but not the value. You earned 5 points!");
+                        addPoint = 5;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\n\nYou didn't guess correctly, try again next time!");
+                    }
+                }
+            }
+            Console.ForegroundColor = ConsoleColor.Black;
+            savePoints(addPoint);
+            balance = loadPoints();
+            Console.Write("\n\nYour current point balance is ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write(balance);
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.ReadLine();
         }
 
         static int GetCard()
@@ -217,7 +264,23 @@ namespace Card_Game
                 default:
                     return "null";
                     break;
-            }
+            } 
+        }
+
+        static int loadPoints()
+        {
+            BinaryReader br = new BinaryReader(new FileStream("points", FileMode.OpenOrCreate));
+            int balance = br.ReadInt32();
+            br.Close();
+            return balance;
+        }
+
+        static void savePoints(int addPoint)
+        {
+            int balance = loadPoints();
+            BinaryWriter bw = new BinaryWriter(new FileStream("points", FileMode.Create));
+            bw.Write(balance + addPoint);
+            bw.Close();
         }
     }
 }
