@@ -18,169 +18,284 @@ namespace Card_Game
             string Suit = GetSuit(Number);
             int Rank = GetRank(Number);
             string Value = GetCardValue(Rank);
-
-            Console.WriteLine("-*-*-*-*-*-*-\n\nGuess a Card\n\n-*-*-*-*-*-*-");
-            Console.Write("\n\nFirst, guess the ");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("Suit");
-            Console.Write("\n\n[1]");
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write(" Hearts");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("    [2]");
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write(" Diamonds");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("    [3]");
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write(" Spades");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("    [4]");
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write(" Clubs\n\n");
-            int guessSuit = Convert.ToInt16(Console.ReadLine());
-            Console.Clear();
-
-            Console.WriteLine("-*-*-*-*-*-*-\n\nGuess a Card\n\n-*-*-*-*-*-*-");
-            Console.Write("\n\nNow guess the ");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("Value");
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write("    (Enter Number OR Choose Option Below)");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("\n\n[11]");
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write(" Jack");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("    [12]");
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write(" Queen");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("    [13]");
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write(" King\n\n");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.ForegroundColor = ConsoleColor.Black;
-            int guessValue = Convert.ToInt16(Console.ReadLine());
-            guessValue--;
-            Console.Clear();
-
-            string guessSuitStr;
-            switch (guessSuit)
-            {
-                case 1:
-                    guessSuitStr = "Hearts";
-                    break;
-                case 2:
-                    guessSuitStr = "Diamonds";
-                    break;
-                case 3:
-                    guessSuitStr = "Spades";
-                    break;
-                case 4:
-                    guessSuitStr = "Clubs";
-                    break;
-                default:
-                    guessSuitStr = "null";
-                    break;
-            }
-
-            string guessValueStr;
-            switch (guessValue)
-            {
-                case 0:
-                    guessValueStr = "Ace";
-                    break;
-                case 1:
-                    guessValueStr = "Two";
-                    break;
-                case 2:
-                    guessValueStr = "Three";
-                    break;
-                case 3:
-                    guessValueStr = "Four";
-                    break;
-                case 4:
-                    guessValueStr = "Five";
-                    break;
-                case 5:
-                    guessValueStr = "Six";
-                    break;
-                case 6:
-                    guessValueStr = "Seven";
-                    break;
-                case 7:
-                    guessValueStr = "Eight";
-                    break;
-                case 8:
-                    guessValueStr = "Nine";
-                    break;
-                case 9:
-                    guessValueStr = "Ten";
-                    break;
-                case 10:
-                    guessValueStr = "Jack";
-                    break;
-                case 11:
-                    guessValueStr = "Queen";
-                    break;
-                case 12:
-                    guessValueStr = "King";
-                    break;
-                default:
-                    guessValueStr = "null";
-                    break;
-            }
+            payWall();
+        }
+        static void payWall()
+        {
+            // Loading balance and error correction
             int balance = loadPoints();
-            Console.WriteLine("-*-*-*-*-*-*-\t\t\t\t\t\tPoint Balance: " + balance + "\n\nGuess a Card\n\n-*-*-*-*-*-*-");
-            Console.WriteLine("\n\nYour guess is: " + guessValueStr + " of " + guessSuitStr);
-            Console.WriteLine("\nPress Enter to Continue...");
-            Console.ReadLine();
-            Console.WriteLine("The correct card was: " + Value + " of " + Suit);
-            int addPoint = 0;
+            if (balance == -404)
+            {
+                savePoints(-404);
+                payWall();
+            }
+
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.White;
             Console.Clear();
             Console.WriteLine("-*-*-*-*-*-*-\n\nGuess a Card\n\n-*-*-*-*-*-*-");
-            Console.WriteLine("\n\nYour guess is: " + guessValueStr + " of " + guessSuitStr);
-            Console.WriteLine("The correct card was: " + Value + " of " + Suit);
-            if (guessValueStr == Value && guessSuitStr == Suit)
+            Console.Write("\n\nYou currently have ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write(balance);
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write(" Credits");
+            Console.Write("\nThe cost of 1 game is ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write("5 Credits");
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine("\n\n\nWould you like to play?\n\n[Y] Yes    [N] No");
+            string wantPlay = Console.ReadLine();
+            if (wantPlay == "Y")
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("\n\nYour guess was correct! You earned 10 points!");
-                addPoint = 10;
-            }
-            else
-            {
-                if (guessValueStr == Value)
+                int tempBalance = balance - 5;
+                int pointDiff = -tempBalance;
+                if (tempBalance < 0)
                 {
-                    Console.ForegroundColor = ConsoleColor.Magenta;
-                    Console.WriteLine("\n\nYou guessed the value correctly, but not the suit. You earned 5 points!");
-                    addPoint = 5;
+                    Console.Clear();
+                    Console.WriteLine("-*-*-*-*-*-*-\n\nGuess a Card\n\n-*-*-*-*-*-*-");
+                    Console.WriteLine("Sorry, you need " + pointDiff + " more points to play.");
+                    Console.WriteLine("\n\nPress any key to continue...");
+                    Console.ReadLine();
+                    payWall();
                 }
                 else
                 {
-                    if (guessSuitStr == Suit)
+                    balance = balance - 5;
+                    savePoints(balance);
+                    Console.Clear();
+                    Console.WriteLine("-*-*-*-*-*-*-\n\nGuess a Card\n\n-*-*-*-*-*-*-");
+                    Console.WriteLine("\n\nYou purchased 1 Game, you now have " + balance + " Credits");
+                    Console.WriteLine("\n\nPress any key to start...");
+                    Console.ReadLine();
+                    Game(balance);
+                }
+            }
+            else
+            {
+                if (wantPlay == "N")
+                {
+                    Console.Clear();
+                    Console.WriteLine("-*-*-*-*-*-*-\n\nGuess a Card\n\n-*-*-*-*-*-*-");
+                    Console.WriteLine("See you next time!");
+                    Console.WriteLine("\n\nPress any key to continue...");
+                    Console.ReadLine();
+                    savePoints(0);
+                    Environment.Exit(0);
+                }
+                else
+                {
+                    if (wantPlay == "jack123")
+                    {
+                        balance = balance + 50;
+                        savePoints(50);
+                        payWall();
+                    }
+                    else
+                    {
+                        payWall();
+                    }
+                }
+            }
+        }
+        static void Game(int balance)
+        {
+            try
+            {
+                // Computer generated card
+                int Number = GetCard();
+                string Suit = GetSuit(Number);
+                int Rank = GetRank(Number);
+                string Value = GetCardValue(Rank);
+                Console.Clear();
+
+                // Guess the Suit
+                Console.WriteLine("-*-*-*-*-*-*-\t\t\t\t\t\tPoint Balance: " + balance + "\n\nGuess a Card\n\n-*-*-*-*-*-*-");
+                Console.Write("\n\nFirst, guess the ");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("Suit");
+                Console.Write("\n\n[1]");
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write(" Hearts");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("    [2]");
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write(" Diamonds");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("    [3]");
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write(" Spades");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("    [4]");
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write(" Clubs\n\n");
+                int guessSuit = Convert.ToInt16(Console.ReadLine());
+                string guessSuitStr = inputConvert(1, guessSuit, 1);
+                Console.Clear();
+
+                // Guess the Value
+                Console.WriteLine("-*-*-*-*-*-*-\t\t\t\t\t\tPoint Balance: " + balance + "\n\nGuess a Card\n\n-*-*-*-*-*-*-");
+                Console.Write("\n\nNow guess the ");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("Value");
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write("    (Enter Number OR Choose Option Below)");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("\n\n[11]");
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write(" Jack");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("    [12]");
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write(" Queen");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write("    [13]");
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write(" King\n\n");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.ForegroundColor = ConsoleColor.Black;
+                int guessValue = Convert.ToInt16(Console.ReadLine());
+                guessValue--;
+                string guessValueStr = inputConvert(2, 1, guessValue);
+
+                // Answer page
+                Console.Clear();
+                Console.WriteLine("-*-*-*-*-*-*-\t\t\t\t\t\tPoint Balance: " + balance + "\n\nGuess a Card\n\n-*-*-*-*-*-*-");
+                Console.WriteLine("\n\nYour guess is: " + guessValueStr + " of " + guessSuitStr);
+                Console.WriteLine("\nPress Enter to Continue...");
+                Console.ReadLine();
+                Console.WriteLine("The correct card was: " + Value + " of " + Suit);
+                int addPoint = 0;
+                Console.Clear();
+                Console.WriteLine("-*-*-*-*-*-*-\n\nGuess a Card\n\n-*-*-*-*-*-*-");
+                Console.WriteLine("\n\nYour guess is: " + guessValueStr + " of " + guessSuitStr);
+                Console.WriteLine("The correct card was: " + Value + " of " + Suit);
+
+                // Points calulator
+                if (guessValueStr == Value && guessSuitStr == Suit)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("\n\nYour guess was correct! You earned 10 points!");
+                    addPoint = 10;
+                }
+                else
+                {
+                    if (guessValueStr == Value)
                     {
                         Console.ForegroundColor = ConsoleColor.Magenta;
-                        Console.WriteLine("\n\nYou guessed the suit correctly, but not the value. You earned 5 points!");
+                        Console.WriteLine("\n\nYou guessed the value correctly, but not the suit. You earned 5 points!");
                         addPoint = 5;
                     }
                     else
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\n\nYou didn't guess correctly, try again next time!");
+                        if (guessSuitStr == Suit)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Magenta;
+                            Console.WriteLine("\n\nYou guessed the suit correctly, but not the value. You earned 5 points!");
+                            addPoint = 5;
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\n\nYou didn't guess correctly, try again next time!");
+                        }
                     }
                 }
+                Console.ForegroundColor = ConsoleColor.Black;
+                savePoints(addPoint);
+                balance = loadPoints();
+                Console.Write("\n\nYour current point balance is ");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write(balance);
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.ReadLine();
+                payWall();
             }
-            Console.ForegroundColor = ConsoleColor.Black;
-            savePoints(addPoint);
-            balance = loadPoints();
-            Console.Write("\n\nYour current point balance is ");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write(balance);
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.ReadLine();
+            catch (Exception e)
+            {
+                Console.Clear();
+                Console.WriteLine("\nAn error occured\n\nPress any key to continue...\n\n\n\n" + e);
+                Console.ReadLine();
+                payWall();
+            }
         }
 
+        static string inputConvert(int mode, int suit, int value)
+        {
+            if (mode == 1)
+            {
+                string guessSuitStr;
+                switch (suit)
+                {
+                    case 1:
+                        guessSuitStr = "Hearts";
+                        break;
+                    case 2:
+                        guessSuitStr = "Diamonds";
+                        break;
+                    case 3:
+                        guessSuitStr = "Spades";
+                        break;
+                    case 4:
+                        guessSuitStr = "Clubs";
+                        break;
+                    default:
+                        guessSuitStr = "null";
+                        break;
+                }
+                return guessSuitStr;
+            }
+            else
+            {
+                string guessValueStr;
+                switch (value)
+                {
+                    case 0:
+                        guessValueStr = "Ace";
+                        break;
+                    case 1:
+                        guessValueStr = "Two";
+                        break;
+                    case 2:
+                        guessValueStr = "Three";
+                        break;
+                    case 3:
+                        guessValueStr = "Four";
+                        break;
+                    case 4:
+                        guessValueStr = "Five";
+                        break;
+                    case 5:
+                        guessValueStr = "Six";
+                        break;
+                    case 6:
+                        guessValueStr = "Seven";
+                        break;
+                    case 7:
+                        guessValueStr = "Eight";
+                        break;
+                    case 8:
+                        guessValueStr = "Nine";
+                        break;
+                    case 9:
+                        guessValueStr = "Ten";
+                        break;
+                    case 10:
+                        guessValueStr = "Jack";
+                        break;
+                    case 11:
+                        guessValueStr = "Queen";
+                        break;
+                    case 12:
+                        guessValueStr = "King";
+                        break;
+                    default:
+                        guessValueStr = "null";
+                        break;
+                }
+                return guessValueStr;
+            }
+        }
+        
         static int GetCard()
         {
             Random rndNum = new Random();
@@ -269,18 +384,50 @@ namespace Card_Game
 
         static int loadPoints()
         {
-            BinaryReader br = new BinaryReader(new FileStream("points", FileMode.OpenOrCreate));
-            int balance = br.ReadInt32();
-            br.Close();
-            return balance;
+            try
+            {
+                BinaryReader br = new BinaryReader(new FileStream("points", FileMode.Open));
+                int balance = br.ReadInt32();
+                br.Close();
+                return balance;
+
+            }
+            catch (Exception e)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.WriteLine("A loading error occured...\nTrying to fix it.\n\n\n" + e);
+                Console.ReadLine();
+                return -404;
+            }
         }
 
         static void savePoints(int addPoint)
         {
-            int balance = loadPoints();
-            BinaryWriter bw = new BinaryWriter(new FileStream("points", FileMode.Create));
-            bw.Write(balance + addPoint);
-            bw.Close();
+            try
+            {
+                int balance;
+                if (addPoint == -404)
+                {
+                    balance = 50;
+                    addPoint = 0;
+                }
+                else
+                {
+                    balance = loadPoints();
+                }
+                BinaryWriter bw = new BinaryWriter(new FileStream("points", FileMode.Create));
+                bw.Write(balance + addPoint);
+                bw.Close();
+
+            }
+            catch (Exception e)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.WriteLine("A saving error occured...\n\n" + e);
+                Console.ReadLine();
+            }
         }
     }
 }
