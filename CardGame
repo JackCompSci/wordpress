@@ -26,7 +26,7 @@ namespace Card_Game
             int balance = loadPoints();
             if (balance == -404)
             {
-                savePoints(-404);
+                savePoints(1,-404);
                 payWall();
             }
 
@@ -41,8 +41,9 @@ namespace Card_Game
             Console.Write(" Credits");
             Console.Write("\nThe cost of 1 game is ");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("5 Credits");
+            Console.Write("5");
             Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write(" Credits");
             Console.WriteLine("\n\n\nWould you like to play?\n\n[Y] Yes    [N] No");
             string wantPlay = Console.ReadLine();
             if (wantPlay == "Y")
@@ -53,7 +54,7 @@ namespace Card_Game
                 {
                     Console.Clear();
                     Console.WriteLine("-*-*-*-*-*-*-\n\nGuess a Card\n\n-*-*-*-*-*-*-");
-                    Console.WriteLine("Sorry, you need " + pointDiff + " more points to play.");
+                    Console.WriteLine("\nSorry, you need " + pointDiff + " more points to play.");
                     Console.WriteLine("\n\nPress any key to continue...");
                     Console.ReadLine();
                     payWall();
@@ -61,7 +62,7 @@ namespace Card_Game
                 else
                 {
                     balance = balance - 5;
-                    savePoints(balance);
+                    savePoints(2,balance);
                     Console.Clear();
                     Console.WriteLine("-*-*-*-*-*-*-\n\nGuess a Card\n\n-*-*-*-*-*-*-");
                     Console.WriteLine("\n\nYou purchased 1 Game, you now have " + balance + " Credits");
@@ -79,7 +80,7 @@ namespace Card_Game
                     Console.WriteLine("See you next time!");
                     Console.WriteLine("\n\nPress any key to continue...");
                     Console.ReadLine();
-                    savePoints(0);
+                    savePoints(1,0);
                     Environment.Exit(0);
                 }
                 else
@@ -87,7 +88,7 @@ namespace Card_Game
                     if (wantPlay == "jack123")
                     {
                         balance = balance + 50;
-                        savePoints(50);
+                        savePoints(1,50);
                         payWall();
                     }
                     else
@@ -128,7 +129,7 @@ namespace Card_Game
                 Console.Write("    [4]");
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.Write(" Clubs\n\n");
-                int guessSuit = Convert.ToInt16(Console.ReadLine());
+                int guessSuit = safeInput();
                 string guessSuitStr = inputConvert(1, guessSuit, 1);
                 Console.Clear();
 
@@ -153,7 +154,7 @@ namespace Card_Game
                 Console.Write(" King\n\n");
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.ForegroundColor = ConsoleColor.Black;
-                int guessValue = Convert.ToInt16(Console.ReadLine());
+                int guessValue = safeInput();
                 guessValue--;
                 string guessValueStr = inputConvert(2, 1, guessValue);
 
@@ -201,7 +202,7 @@ namespace Card_Game
                     }
                 }
                 Console.ForegroundColor = ConsoleColor.Black;
-                savePoints(addPoint);
+                savePoints(1,addPoint);
                 balance = loadPoints();
                 Console.Write("\n\nYour current point balance is ");
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -402,24 +403,32 @@ namespace Card_Game
             }
         }
 
-        static void savePoints(int addPoint)
+        static void savePoints(int mode, int addPoint)
         {
             try
             {
-                int balance;
-                if (addPoint == -404)
+                if (mode == 1)
                 {
-                    balance = 50;
-                    addPoint = 0;
+                    int balance;
+                    if (addPoint == -404)
+                    {
+                        balance = 50;
+                        addPoint = 0;
+                    }
+                    else
+                    {
+                        balance = loadPoints();
+                    }
+                    BinaryWriter bw = new BinaryWriter(new FileStream("points", FileMode.Create));
+                    bw.Write(balance + addPoint);
+                    bw.Close();
                 }
                 else
                 {
-                    balance = loadPoints();
+                    BinaryWriter bw = new BinaryWriter(new FileStream("points", FileMode.Create));
+                    bw.Write(addPoint);
+                    bw.Close();
                 }
-                BinaryWriter bw = new BinaryWriter(new FileStream("points", FileMode.Create));
-                bw.Write(balance + addPoint);
-                bw.Close();
-
             }
             catch (Exception e)
             {
@@ -428,6 +437,30 @@ namespace Card_Game
                 Console.WriteLine("A saving error occured...\n\n" + e);
                 Console.ReadLine();
             }
+        }
+
+        static void settings()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine("-*-*-*-*-*-*-\n\nSettings Page\n\n-*-*-*-*-*-*-");
+            Console.WriteLine("\n\nPoints for half right guess:");
+            Console.WriteLine("Points for full right guess:");
+        }
+
+        static int safeInput()
+        {
+            int input = 1;
+            try
+            {
+                input = Convert.ToInt16(Console.ReadLine());
+                return input;
+            }
+            catch (Exception e)
+            {
+                safeInput();
+            }
+            return input;
         }
     }
 }
