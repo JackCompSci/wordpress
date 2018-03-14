@@ -46,7 +46,7 @@ namespace Card_Game
             Console.Write(" Credits");
             Console.WriteLine("\n\n\nWould you like to play?\n\n[Y] Yes    [N] No");
             string wantPlay = Console.ReadLine();
-            if (wantPlay == "Y")
+            if ((wantPlay == "Y") || (wantPlay == "y"))
             {
                 int tempBalance = balance - 5;
                 int pointDiff = -tempBalance;
@@ -73,11 +73,11 @@ namespace Card_Game
             }
             else
             {
-                if (wantPlay == "N")
+                if ((wantPlay == "N") || (wantPlay == "n"))
                 {
                     Console.Clear();
                     Console.WriteLine("-*-*-*-*-*-*-\n\nGuess a Card\n\n-*-*-*-*-*-*-");
-                    Console.WriteLine("See you next time!");
+                    Console.WriteLine("\nSee you next time!");
                     Console.WriteLine("\n\nPress any key to continue...");
                     Console.ReadLine();
                     savePoints(1,0);
@@ -93,7 +93,16 @@ namespace Card_Game
                     }
                     else
                     {
-                        payWall();
+                        if (wantPlay == "addPoints")
+                        {
+                            balance = balance + Convert.ToInt16(Console.ReadLine());
+                            savePoints(2, balance);
+                            payWall();
+                        }
+                        else
+                        {
+                            payWall();
+                        }
                     }
                 }
             }
