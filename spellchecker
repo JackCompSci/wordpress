@@ -1,0 +1,108 @@
+using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace hashing
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+           // declaration for hashtable and bool to control loop
+            Hashtable hashtable = fileReader();
+            bool check = true;
+
+            // keep adding strings until -1 is entered
+            while (check)
+            {
+                Console.Clear();
+                Console.WriteLine("Enter a word");
+                string valueEntered = Console.ReadLine();
+                valueEntered = valueEntered.ToUpper();
+                if (hashtable[hashFunction(valueEntered)] != null)
+                {
+                    Console.WriteLine("\nSpelling is correct!");
+                }
+                else
+                {
+                    if (valueEntered == "EXITPROGRAM")
+                    {
+                        check = false;
+                    }
+                    else
+                    {
+                        if (valueEntered == "DISPLAYHASHTABLE")
+                        {
+                            displayHashTable(hashtable);
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nSpelling is incorrect!");
+                        }
+                    }
+                }
+                Console.ReadLine();
+            }
+
+            // print out the current hash table
+            displayHashTable(hashtable);
+
+            Console.ReadLine();
+
+
+        }
+
+        // method to display the hash table
+        static void displayHashTable(Hashtable hashtable) 
+        {
+            // for each entry in the hash table
+            foreach (DictionaryEntry entry in hashtable)
+            {
+                // print the key (position) and the value
+                Console.WriteLine("{0}, {1}", entry.Key, entry.Value);
+            }
+        }
+
+        // the method to add to the hash table
+        // it uses the hashing function to calculate position
+        // it checks the position is empty
+        // if it is the value is written to that position
+        static void addToHashTable(ref Hashtable hashtable, string valueEntered) 
+        {
+            int pos = hashFunction(valueEntered);
+            if (hashtable[pos] != null)
+            {
+                Console.WriteLine("hashing collision!!!!");
+            }
+            else
+            {
+                hashtable[pos] = valueEntered;
+            }
+        }
+
+        // the hash function
+        // this is used to calculate the position using the value entered
+        // you can use the built in "GetHashCode" with any string
+        static int hashFunction(string entry)
+        {
+            // return the hash code
+            return (entry.GetHashCode());
+        }
+
+        static Hashtable fileReader()
+        {
+            Hashtable hashtable = new Hashtable();
+            string[] wordlist = File.ReadAllLines(@"K:\Downloads\String Hashing\hashing\hashing\words.txt");
+            foreach (string line in wordlist)
+            {
+                addToHashTable(ref hashtable, line);
+            }
+            return hashtable;
+        }
+    }
+}
