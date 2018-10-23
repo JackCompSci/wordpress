@@ -12,6 +12,12 @@ namespace hashing
     {
         static void Main(string[] args)
         {
+            /*
+        
+            WORDLIST IS STORED AT https://github.com/JackCompSci/wordpress/blob/master/wordlist
+        
+            */
+            
             Console.ForegroundColor = ConsoleColor.Green;
            // declaration for hashtable and bool to control loop
             Hashtable hashtable = fileReader();
