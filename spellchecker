@@ -14,12 +14,13 @@ namespace hashing
         {
             /*
         
-            WORDLIST IS STORED AT https://github.com/JackCompSci/wordpress/blob/master/wordlist
-        
+            Word list is available at https://github.com/JackCompSci/wordpress/blob/master/wordlist
+            :)
+
             */
-            
+
             Console.ForegroundColor = ConsoleColor.Green;
-           // declaration for hashtable and bool to control loop
+            // declaration for hashtable and bool to control loop
             Hashtable hashtable = fileReader();
             bool check = true;
 
@@ -64,7 +65,7 @@ namespace hashing
         }
 
         // method to display the hash table
-        static void displayHashTable(Hashtable hashtable) 
+        static void displayHashTable(Hashtable hashtable)
         {
             // for each entry in the hash table
             foreach (DictionaryEntry entry in hashtable)
@@ -78,7 +79,7 @@ namespace hashing
         // it uses the hashing function to calculate position
         // it checks the position is empty
         // if it is the value is written to that position
-        static void addToHashTable(ref Hashtable hashtable, string valueEntered) 
+        static void addToHashTable(ref Hashtable hashtable, string valueEntered)
         {
             int pos = hashFunction(valueEntered);
             if (hashtable[pos] != null)
@@ -103,7 +104,7 @@ namespace hashing
         static Hashtable fileReader()
         {
             Hashtable hashtable = new Hashtable();
-            string[] wordlist = File.ReadAllLines(@"K:\Downloads\String Hashing\hashing\hashing\words.txt");
+            string[] wordlist = File.ReadAllLines(@"K:\Downloads\String Hashing\hashing\hashing\words.txt"); // File path of word list
             foreach (string line in wordlist)
             {
                 addToHashTable(ref hashtable, line);
